@@ -1,0 +1,3 @@
+include ':app', ':db-gen'
+include ':broadcasttile'
+project(':broadcasttile').projectDir = file('app/libs/BroadcastTileSupport/broadcasttilesupport')

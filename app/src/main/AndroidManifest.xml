@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.snilius.suchquick">
+
+    <!-- <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/> -->
+    <uses-permission
+        android:name="cyanogenmod.permission.PUBLISH_CUSTOM_TILE"
+        android:required="false" />
+
+    <application
+        android:name=".SuchQuick"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".PublicBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.snilius.suchquick.ACTION_CLICK" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".ui.AddActivity"
+            android:label="@string/title_activity_add"
+            android:parentActivityName=".ui.TilesListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.snilius.suchquick.ui.TilesListActivity" />
+        </activity>
+        <activity
+            android:name=".ui.TilesListActivity"
+            android:label="@string/title_activity_main2" />
+        <activity
+            android:name=".ui.ActualAddActivity"
+            android:label="@string/title_activity_actual_add"
+            android:parentActivityName=".ui.AddActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.snilius.suchquick.ui.AddActivity" />
+        </activity>
+        <activity android:name=".ui.IconSelectorActivity" />
+        <activity android:name=".ui.AppSelectorActivity"></activity>
+    </application>
+
+</manifest>

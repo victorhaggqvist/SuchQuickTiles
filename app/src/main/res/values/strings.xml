@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Such Quick</string>
+    <string name="mode_aosp">Running in AOSP (Marshmallow) mode.</string>
+    <string name="mode_cm">Running in Cyanogen Mod mode (using CM platfrom SDK 2).</string>
+    <string name="help_m" formatted="false">
+\n\n1. Make sure yoiu have enabled the System UI Tuner,
+\n2. Click System UI Tuner and accept the prompt if any
+\n3. Go into Quick Settings
+\n4. Add a new tile named \"%s\"
+\n5. Head back here when you are done.
+    </string>
+    <string name="help_cm">
+\n\nNo thurder actions needed, just add a tile.
+    </string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_actual_add">ActualAddActivity</string>
+    <string name="title_activity_add">New Tile</string>
+
+    <array name="actions_array">
+        <item>None</item>
+        <item>Launch App</item>
+        <item>Launch Shortcut</item>
+        <item>URL</item>
+    </array>
+</resources>

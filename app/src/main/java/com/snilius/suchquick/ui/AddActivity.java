@@ -7,6 +7,7 @@ import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,12 +25,11 @@ import timber.log.Timber;
 
 public class AddActivity extends AppCompatActivity {
 
-    @Bind(R.id.mode_header)
-    TextView mModeHeader;
-    @Bind(R.id.help)
-    TextView mHelp;
-    @Bind(R.id.toolbar)
-    Toolbar mToolbar;
+    @Bind(R.id.mode_header) TextView mModeHeader;
+    @Bind(R.id.help)        TextView mHelp;
+    @Bind(R.id.toolbar)     Toolbar mToolbar;
+    @Bind(R.id.copy_tile_name) Button mCopyTileName;
+    @Bind(R.id.goto_add)    Button mAdd;
 
     private String mTilename;
 
@@ -43,7 +43,7 @@ public class AddActivity extends AppCompatActivity {
 
 
         DaoSession session = DbConnection.getSession();
-        long count = session.getShortcutDao().count();
+        long count = session.getTileDao().count();
 
         mTilename = "sc" + (count + 1);
         Timber.d("tilename "+mTilename);
@@ -51,9 +51,17 @@ public class AddActivity extends AppCompatActivity {
             Timber.d("aosp mode");
             mModeHeader.setText(getString(R.string.mode_aosp));
             mHelp.setText(getString(R.string.help_m, mTilename));
-        } else if (cyanogenmod.os.Build.CM_VERSION.SDK_INT > cyanogenmod.os.Build.CM_VERSION_CODES.BOYSENBERRY) {
+        } else if (cyanogenmod.os.Build.CM_VERSION.SDK_INT >= cyanogenmod.os.Build.CM_VERSION_CODES.BOYSENBERRY) {
             mModeHeader.setText(getString(R.string.mode_cm));
             mHelp.setText(R.string.help_cm);
+
+            mCopyTileName.setVisibility(View.GONE);
+            mAdd.setText("Add Tile");
+        } else {
+            mModeHeader.setText("Device not supported");
+            mHelp.setText(null);
+            mCopyTileName.setVisibility(View.GONE);
+            mAdd.setVisibility(View.GONE);
         }
     }
 

@@ -178,6 +178,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             } catch (Exception e){}
             Bitmap sIcon = (Bitmap) extras.get("android.intent.extra.shortcut.ICON");
+            if (sIcon == null) {
+                Timber.d("no cut icon");
+            } else {
+                Timber.d("cut icon");
+            }
             ImageView imageView = new ImageView(this);
             Drawable iconResource = new BitmapDrawable(sIcon);
             imageView.setImageDrawable(iconResource);
@@ -190,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
 //            startActivity(sIntent);
 
 //            TaskStackBuilder.create(this).addNextIntent(sIntent).
-            Intent actionIntent = new Intent(PublicBroadcastReceiver.ACTION_CLICK);
+            Intent actionIntent = new Intent(PublicBroadcastReceiver.ACTION_SHORTCUT);
             actionIntent.putExtra(PublicBroadcastReceiver.EXTRA_SHORTCUT_ID, shortcutId);
 
             if (BuildConfig.VERSION_CODE >= Build.VERSION_CODES.M) {

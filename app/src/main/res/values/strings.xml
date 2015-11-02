@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Such Quick</string>
-    <string name="mode_aosp">Running in AOSP (Marshmallow) mode.</string>
-    <string name="mode_cm">Running in Cyanogen Mod mode (using CM platfrom SDK 2).</string>
+    <string name="app_name">Such Quick Tiles</string>
+    <string name="mode_aosp">Running in AOSP (Marshmallow) mode</string>
+    <string name="mode_cm">Running in Cyanogen Mod mode</string>
     <string name="help_m" formatted="false">
 \n\n1. Make sure yoiu have enabled the System UI Tuner,
 \n2. Click System UI Tuner and accept the prompt if any
@@ -10,16 +10,33 @@
 \n5. Head back here when you are done.
     </string>
     <string name="help_cm">
-\n\nNo thurder actions needed, just add a tile.
+\n\nNo further actions needed, just add a tile.
     </string>
-    <string name="title_activity_main2">Main2Activity</string>
-    <string name="title_activity_actual_add">ActualAddActivity</string>
+    <string name="title_activity_tiles_list">Tiles</string>
+    <string name="title_activity_actual_add">Create Tile</string>
     <string name="title_activity_add">New Tile</string>
+    <string name="title_activity_icon_selector">Select Icon</string>
+    <string name="title_activity_app_selector">Select App</string>
+    <string name="description">
+This app, Such Quick Tiles, is available under GPLv3.
+
+\n\nCustom Quick Settings Tiles for Android 6.0 Marshmallow and CyanogenMod devices with CM Platform SDK 2.
+
+\n\nFor more info on platform differences please see https://github.com/victorhaggqvist/SuchQuickTiles
+
+\n\nIcon credits
+\n- The guy in the app icon, Runner by Diego Naive, from The Noun Project, https://thenounproject.com/term/runner/168818/
+\n- The "abc" icon, alphabetical by Austin Andrews, https://materialdesignicons.com/icon/alphabetical
+\n- The hand icon, Hand by Michele Zamparo, https://thenounproject.com/term/hand/10491/
+\n- Material design icons by Google, https://github.com/google/material-design-icons/
+    </string>
+    <string name="about">About</string>
+    <string name="title_activity_about">About</string>
 
     <array name="actions_array">
         <item>None</item>
         <item>Launch App</item>
         <item>Launch Shortcut</item>
-        <item>URL</item>
+        <!--<item>URL</item>--> <!-- not implemented yet -->
     </array>
 </resources>

@@ -1,7 +1,5 @@
 package com.example;
 
-import java.io.IOException;
-
 import de.greenrobot.daogenerator.DaoGenerator;
 import de.greenrobot.daogenerator.Entity;
 import de.greenrobot.daogenerator.Property;
@@ -27,6 +25,23 @@ public class DbGen {
         Property shortcutId = extra.addLongProperty("shortcutId").notNull().getProperty();
         shortcut.addToMany(extra, shortcutId);
 
-        new DaoGenerator().generateAll(schema, "/home/victor/AndroidStudioProjects/SuchQuick/app/src-gen");
+        Entity tile = schema.addEntity("Tile");
+        tile.addIdProperty();
+        tile.addStringProperty("Label");
+        tile.addStringProperty("ClickType");
+        tile.addStringProperty("LongClickType");
+        tile.addLongProperty("ClickActionId");
+        tile.addLongProperty("LongClickActionId");
+        tile.addIntProperty("IconResource"); // aosp
+        tile.addStringProperty("IconPath");     // for custom icon on cm
+        tile.addBooleanProperty("IconIsPackageDrawable"); // cm only
+        tile.addStringProperty("SystemTileName");
+        tile.addBooleanProperty("Enabled");
+
+        Entity launcher = schema.addEntity("Launcher");
+        launcher.addIdProperty();
+        launcher.addStringProperty("PackageName");
+
+        new DaoGenerator().generateAll(schema, "/home/victor/AndroidStudioProjects/SuchQuickTiles/app/src-gen");
     }
 }

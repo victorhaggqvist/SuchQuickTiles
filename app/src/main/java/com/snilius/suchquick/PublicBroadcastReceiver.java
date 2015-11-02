@@ -7,19 +7,27 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.snilius.suchquick.data.DbConnection;
+import com.snilius.suchquick.data.TileType;
 import com.snilius.suchquick.entity.DaoSession;
 import com.snilius.suchquick.entity.IntentExtra;
+import com.snilius.suchquick.entity.Launcher;
+import com.snilius.suchquick.entity.LauncherDao;
 import com.snilius.suchquick.entity.Shortcut;
 import com.snilius.suchquick.entity.ShortcutDao;
+import com.snilius.suchquick.entity.Tile;
+import com.snilius.suchquick.entity.TileDao;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
 public class PublicBroadcastReceiver extends BroadcastReceiver {
 
-    public static final String ACTION_CLICK = "com.snilius.suchquick.ACTION_CLICK";
+//    public static final String ACTION_CLICK = "com.snilius.suchquick.ACTION_CLICK";
+    public static final String ACTION_SHORTCUT = "com.snilius.suchquick.ACTION_SHORTCUT";
+    public static final String ACTION_LAUNCHER = "com.snilius.suchquick.ACTION_LAUNCHER";
 
     public static final String EXTRA_SHORTCUT_ID = "com.snilius.suchquick.EXTRA_SHORTCUT_ID";
+    public static final String EXTRA_TILE_ID = "com.snilius.suchquick.EXTRA_TILE_ID";
+    public static final String EXTRA_IS_LONG_CLICK = "com.snilius.suchquick.EXTRA_IS_LONG_CLICK";
 
     private static final String TAG = PublicBroadcastReceiver.class.getSimpleName();
 
@@ -30,8 +38,12 @@ public class PublicBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         final String action = intent.getAction();
         Log.i(TAG, "Called");
+        Log.d(TAG, "action " + action);
 
-        if (action.equals(ACTION_CLICK)) {
+        int isLongClick = intent.getIntExtra(EXTRA_IS_LONG_CLICK, -1);
+        Log.d(TAG, "isLongClick " + isLongClick);
+
+        if (action.equals(ACTION_SHORTCUT)) {
             DbConnection.setContext(context);
             DaoSession session = DbConnection.getSession();
 
@@ -65,7 +77,28 @@ public class PublicBroadcastReceiver extends BroadcastReceiver {
                 Log.i(TAG, "Called with no extra");
             }
 
-        } else {
+        } else if (action.equals(ACTION_LAUNCHER)) {
+            DbConnection.setContext(context);
+            DaoSession session = DbConnection.getSession();
+
+            long tileId = intent.getLongExtra(EXTRA_TILE_ID, -1);
+            if (tileId != -1) {
+                TileDao tileDao = session.getTileDao();
+                Tile tile = tileDao.load(tileId);
+
+                if (tile.getClickType().equals(TileType.LAUNCHER)) {
+                    LauncherDao launcherDao = session.getLauncherDao();
+                    Launcher launcher = launcherDao.load(tile.getClickActionId());
+                    String packageName = launcher.getPackageName();
+
+                    Intent clickAction = context.getPackageManager().getLaunchIntentForPackage(packageName);
+
+                    context.startActivity(clickAction);
+                    context.sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)); // ie close notification panel
+                }
+            }
+        }
+        else {
             Log.i(TAG, "Called with no action");
         }
         // TODO: This method is called when the BroadcastReceiver is receiving

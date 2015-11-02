@@ -2,10 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.snilius.suchquick">
 
-    <!-- <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/> -->
     <uses-permission
         android:name="cyanogenmod.permission.PUBLISH_CUSTOM_TILE"
         android:required="false" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name=".SuchQuick"
@@ -15,11 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
 
         <receiver
@@ -28,6 +27,8 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="com.snilius.suchquick.ACTION_CLICK" />
+                <action android:name="com.snilius.suchquick.ACTION_LAUNCHER" />
+                <action android:name="com.snilius.suchquick.ACTION_SHORTCUT" />
             </intent-filter>
         </receiver>
 
@@ -40,8 +41,13 @@
                 android:value="com.snilius.suchquick.ui.TilesListActivity" />
         </activity>
         <activity
-            android:name=".ui.TilesListActivity"
-            android:label="@string/title_activity_main2" />
+            android:name=".ui.TilesListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.ActualAddActivity"
             android:label="@string/title_activity_actual_add"
@@ -50,8 +56,31 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.snilius.suchquick.ui.AddActivity" />
         </activity>
-        <activity android:name=".ui.IconSelectorActivity" />
-        <activity android:name=".ui.AppSelectorActivity"></activity>
+        <activity
+            android:name=".ui.IconSelectorActivity"
+            android:label="@string/title_activity_icon_selector" />
+        <activity
+            android:name=".ui.AppSelectorActivity"
+            android:label="@string/title_activity_app_selector" />
+
+        <receiver
+            android:name=".background.BootReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".ui.AboutActivity"
+            android:label="@string/title_activity_about"
+            android:parentActivityName=".ui.TilesListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.snilius.suchquick.ui.TilesListActivity" />
+        </activity>
     </application>
 
 </manifest>
